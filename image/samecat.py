@@ -23,7 +23,10 @@
 # 5 Oct 2012 - Initial release by Jesse Korbnblum
 
 
-import os, sys, argparse
+import argparse
+import os
+import sys
+
 from PIL import Image
 from PIL import ImageStat
 

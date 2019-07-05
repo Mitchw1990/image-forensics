@@ -13,12 +13,12 @@ def main():
                         action="store_true",
                         help="recursively process files")
 
-    parser.add_argument("-h", "--hashes",
+    parser.add_argument("-H", "--hashes",
                         metavar="FILE",
                         dest="providedHashes",
                         help="provide a file containing existing hashes")
 
-    parser.add_argument("-t", "--threshold",
+    parser.add_argument("-T", "--threshold",
                         dest="threshold",
                         metavar="<value>",
                         type=int,

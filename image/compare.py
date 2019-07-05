@@ -7,7 +7,6 @@ from PIL import Image
 from PIL import ImageStat
 from PIL.WmfImagePlugin import long
 
-FILE_HEADER = "##SAMECAT001"
 FIRST_OUTPUT = True
 
 
@@ -57,12 +56,8 @@ def hash_file(file_path):
 def display_hash(file_hash, file_name):
     global FIRST_OUTPUT
 
-    if file_hash is None:
-        return None
-
-    if FIRST_OUTPUT:
+    if FIRST_OUTPUT and file_hash is not None:
         FIRST_OUTPUT = False
-        print(FILE_HEADER)
 
     print(("%s,%s" % (file_hash, file_name)))
 
@@ -117,14 +112,8 @@ def load_existing(hashes_file):
         print(e)
         return None
 
-    header = handle.readline().rstrip(b'\r\n')
-
-    if header != FILE_HEADER:
-        print("%s: Invalid header for hashes file" % hashes_file)
-        return True
-
-    known_files = {}
     line_number = 1
+    existing_hashes = {}
 
     for line in handle:
         line_number += 1
@@ -141,13 +130,14 @@ def load_existing(hashes_file):
 
         hashed_file = long(words[0])
 
-        if hashed_file in known_files:
-            known_files[hashed_file].append(words[1])
+        if hashed_file in existing_hashes:
+            existing_hashes[hashed_file].append(words[1])
         else:
-            known_files[hashed_file] = [words[1]]
+            existing_hashes[hashed_file] = [words[1]]
 
     handle.close()
-    return known_files
+
+    return existing_hashes
 
 
 def run_compare(args):

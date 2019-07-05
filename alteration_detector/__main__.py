@@ -1,6 +1,6 @@
 import argparse
 
-from image.compare import run_compare
+from alteration_detector.detect import run_compare
 
 DEFAULT_HAMMING_THRESHOLD = 100
 
